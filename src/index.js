@@ -28,10 +28,6 @@ function ViewController() {
   const searchInput = document.querySelector(".location-input");
 
   //Show some sort of loading icon/modal while async data loads to be displayed
-  // const isLoading = (bool) => {
-  //   const loadingEl = document.querySelector(".loading");
-
-  // }
 
   const renderWeatherData = (data) => {
     const iconEl = document.querySelector(".icon");
@@ -40,24 +36,32 @@ function ViewController() {
     const timeEl = document.querySelector(".time");
     const dateEl = document.querySelector(".date");
 
-    degreesEl.textContent = data.current.condition.temp_f;
+    degreesEl.textContent = `${Math.round(data.current.temp_f)} F`;
     locationEl.textContent = data.location.name;
     timeEl.textContent = data.location.localtime;
-    
-    
+    // iconEl.src = data.current.condition.icon;
+
+    //Find our own weather icons, make a function that takes the weather text
+    //pass weather text throiugh function, use a switch to see if its cloudy, overcast, rainy, etc
+    //return image src as value and stick it into the icon src image
+  
     console.log("RENDER", data);
   };
 
   const searchHandler = async () => {
+    const loadingEl = document.querySelector(".loading");
     const data = await weatherApp.fetchWeatherData(searchInput.value);
-    //If data is loaing show loading modal
-    //Once we have data hhide loading modal
     renderWeatherData(data);
   };
 
+  const defaultRender = async () => {
+    const data = await weatherApp.fetchWeatherData("new york");
+    renderWeatherData(data);
+  }
+
   searchBtn.addEventListener("click", searchHandler);
 
-  weatherApp.fetchWeatherData("new york");
+  defaultRender();
 }
 
 ViewController();
