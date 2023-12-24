@@ -21,6 +21,13 @@ svg {
     width: 20px;
 }
 
+span {
+    display: block;
+    height: 1px;
+    width: 60%;
+    background-color: var(--main-font-color);
+}
+
 body {
     padding: 0;
     margin: 0;
@@ -160,4 +167,8 @@ body {
 .input-error {
     border: 1px solid red;
     background-color: rgb(224, 126, 126);
+}
+
+.optics-icon {
+    width: 40px;
 }

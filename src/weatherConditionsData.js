@@ -289,4 +289,14 @@ const conditions = [
     }
 ]
 
-export { conditions }
+const daysOfTheWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+]
+
+export { conditions, daysOfTheWeek }

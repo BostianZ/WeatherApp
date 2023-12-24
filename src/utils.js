@@ -7,8 +7,12 @@ function Utils() {
     //If day use day icons
    const findIconCode = (str) => {
        let condition = conditions.find(condi => {
-            return condi.day === str ? condi : false;
+        console.log(condi);
+            if (condi.day === str || condi.night === str) {
+                return condi;
+            }
        })
+       console.log("findIconCode", conditions);
        return condition.icon;
     }
 
@@ -32,7 +36,7 @@ function Utils() {
     }
 
     const formatDate = (date) => {
-        
+
     }
 
     return { findIconCode, formatTime }
