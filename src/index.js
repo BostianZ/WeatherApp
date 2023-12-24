@@ -19,7 +19,7 @@ function WeatherApp() {
   };
 
   return {
-    fetchCurrentWeatherData
+    fetchCurrentWeatherData,
   };
 }
 
@@ -31,7 +31,7 @@ function ViewController() {
 
   //Show some sort of loading icon/modal while async data loads to be displayed
 
-  const renderWeatherData = (data) => {
+  const renderCurrentWeatherData = (data) => {
     const iconEl = document.querySelector(".icon");
     const degreesEl = document.querySelector(".degrees");
     const locationEl = document.querySelector(".location");
@@ -39,27 +39,70 @@ function ViewController() {
     const currentWeather = document.querySelector(".current-weather");
     // const dateEl = document.querySelector(".date");
     const iconCode = utils.findIconCode(data.current.condition.text);
-    const formattedTime = utils.formatTime(data.location.localtime)
-    console.log(data.current.condition.text);
+    const formattedTime = utils.formatTime(data.location.localtime);
+
     degreesEl.textContent = `${Math.round(data.current.temp_f)} F`;
     locationEl.textContent = data.location.name;
     timeEl.textContent = formattedTime;
     currentWeather.textContent = data.current.condition.text;
-    iconEl.src = `../dist/icons/day/${iconCode}.png`
+    iconEl.src = `../dist/icons/day/${iconCode}.png`;
+  };
+
+  const renderWeatherForecast = (data) => {
+    const moreWeatherInfoRight = document.querySelector(
+      ".more-weather-info-right"
+    );
+    moreWeatherInfoRight.innerHTML = " ";
+    data.forecast.forecastday.forEach((day) => {
+      console.log(day);
+      const forecastItemWrapper = document.createElement("div");
+      let forecastDate = document.createElement("div");
+      let forecastIcon = document.createElement("img");
+      const forecastTempsWrapper = document.createElement("div");
+      let forecastTempHigh = document.createElement("div");
+      let forecastTempLow = document.createElement("div");
+      let iconCode = utils.findIconCode(day.day.condition.text);
+
+      forecastItemWrapper.classList.add("forecast-item");
+
+      forecastDate.textContent = day.date.substring(5);
+      forecastIcon.src = `../dist/icons/day/${iconCode}.png`;
+      forecastTempHigh.textContent = Math.round(day.day.maxtemp_f) + "F";
+      forecastTempLow.textContent = Math.round(day.day.mintemp_f) + "F";
+
+      forecastItemWrapper.appendChild(forecastDate);
+      forecastItemWrapper.appendChild(forecastIcon);
+      forecastItemWrapper.appendChild(forecastTempsWrapper);
+
+      forecastTempsWrapper.appendChild(forecastTempLow);
+      forecastTempsWrapper.appendChild(forecastTempHigh);
+
+      moreWeatherInfoRight.appendChild(forecastItemWrapper);
+    });
   };
 
   const searchHandler = async () => {
-    const loadingEl = document.querySelector(".loading");
+    // const loadingEl = document.querySelector(".loading");
     const data = await weatherApp.fetchCurrentWeatherData(searchInput.value);
-    renderWeatherData(data);
+    renderCurrentWeatherData(data);
+    renderWeatherForecast(data);
   };
 
   const defaultRender = async () => {
     const data = await weatherApp.fetchCurrentWeatherData("new york");
-    renderWeatherData(data);
-  }
+    renderCurrentWeatherData(data);
+    renderWeatherForecast(data);
+  };
 
-  searchBtn.addEventListener("click", searchHandler);
+  // const asyncFunct = async (val) => {
+  //   const data = await weatherApp.fetchCurrentWeatherData(val);
+  //   renderCurrentWeatherData(data);
+  // }
+
+  searchBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    searchHandler();
+  });
 
   defaultRender();
 }
