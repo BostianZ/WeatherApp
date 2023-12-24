@@ -36,18 +36,16 @@ function ViewController() {
     const degreesEl = document.querySelector(".degrees");
     const locationEl = document.querySelector(".location");
     const timeEl = document.querySelector(".time");
-    const dateEl = document.querySelector(".date");
+    const currentWeather = document.querySelector(".current-weather");
+    // const dateEl = document.querySelector(".date");
     const iconCode = utils.findIconCode(data.current.condition.text);
-    
+    const formattedTime = utils.formatTime(data.location.localtime)
+    console.log(data.current.condition.text);
     degreesEl.textContent = `${Math.round(data.current.temp_f)} F`;
     locationEl.textContent = data.location.name;
-    timeEl.textContent = data.location.localtime;
+    timeEl.textContent = formattedTime;
+    currentWeather.textContent = data.current.condition.text;
     iconEl.src = `../dist/icons/day/${iconCode}.png`
-    //Find our own weather icons, make a function that takes the weather text
-    //pass weather text throiugh function, use a switch to see if its cloudy, overcast, rainy, etc
-    //return image src as value and stick it into the icon src image
-  
-    console.log("RENDER", data);
   };
 
   const searchHandler = async () => {

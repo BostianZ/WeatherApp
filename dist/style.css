@@ -94,7 +94,13 @@ body {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    color: #fff;
+    color: var(--main-font-color);
+}
+
+.todays-weather-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .degrees {
@@ -104,6 +110,11 @@ body {
 
 .location {
     font-size: 24px;
+}
+
+.current-weather {
+    font-size: 32px;
+    font-weight: 700;
 }
 
 /* .icon {
