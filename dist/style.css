@@ -158,12 +158,6 @@ body {
     gap: 12px;
 }
 
-.loading {
-    width: 100px;
-    height: 100px;
-    border: 1px solid black;
-}
-
 .input-error {
     border: 1px solid red;
     background-color: rgb(224, 126, 126);
