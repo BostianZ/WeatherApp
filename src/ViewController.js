@@ -45,7 +45,7 @@ function ViewController() {
   
         forecastItemWrapper.classList.add("forecast-item");
   
-        forecastDate.textContent = daysOfTheWeek[index];
+        forecastDate.textContent = day.date.substring(5);
         forecastIcon.src = `../dist/icons/day/${iconCode}.png`;
         forecastTempHigh.textContent = Math.round(day.day.maxtemp_f) + "F";
         forecastTempLow.textContent = Math.round(day.day.mintemp_f) + "F";
